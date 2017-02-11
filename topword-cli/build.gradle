@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+
+
+dependencies {
+    compile project(':topword-trie')
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    from "${project(':topword-trie').buildDir}/classes/main"
+
+    manifest {
+        attributes 'Main-Class': 'ru.levry.topword.cli.ToperCli'
+    }
+}
