@@ -1,5 +1,6 @@
 package ru.levry.topword.web.config;
 
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +8,6 @@ import org.springframework.core.io.Resource;
 import ru.levry.topword.TopWord;
 import ru.levry.topword.Toper;
 import ru.levry.topword.support.WordReader;
-
-import java.util.Collection;
 
 /**
  * @author levry

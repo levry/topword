@@ -1,15 +1,15 @@
 package ru.levry.topword;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * @author levry
@@ -29,7 +29,8 @@ public class TrieTest {
 
         Iterable<String> actual = trie.keys();
 
-        assertThat(actual, is(Arrays.asList("awokado", "last", "linear", "linergy", "orange", "xenial")));
+        assertThat(actual,
+                is(Arrays.asList("awokado", "last", "linear", "linergy", "orange", "xenial")));
     }
 
     @Test
@@ -45,7 +46,9 @@ public class TrieTest {
         List<Pair> list = new ArrayList<>();
         trie.collectWithPrefix("l", (s, v) -> list.add(new Pair(s, v)));
 
-        assertThat(list, is(Arrays.asList(new Pair("last", 20), new Pair("linear", 330), new Pair("lingerie", 40))));
+        assertThat(list,
+                is(Arrays.asList(new Pair("last", 20), new Pair("linear", 330),
+                        new Pair("lingerie", 40))));
     }
 
     @Test
@@ -105,6 +108,7 @@ public class TrieTest {
     }
 
     private static class Pair {
+
         private final String key;
         private final Integer value;
 
@@ -115,8 +119,12 @@ public class TrieTest {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Pair pair = (Pair) o;
             return Objects.equals(key, pair.key) &&
                     Objects.equals(value, pair.value);

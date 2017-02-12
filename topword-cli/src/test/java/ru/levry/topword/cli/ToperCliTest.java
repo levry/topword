@@ -1,15 +1,14 @@
 package ru.levry.topword.cli;
 
-import org.junit.Test;
-import ru.levry.topword.TopWord;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
+import ru.levry.topword.TopWord;
 
 /**
  * @author levry
@@ -47,18 +46,17 @@ public class ToperCliTest {
         );
         cli.tests = Arrays.asList("ka", "kar");
 
-
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         cli.run(new PrintStream(output));
 
         assertThat(output.toString(), is(
                 "kanojo\n" +
-                "kare\n" +
-                "karetachi\n" +
-                "\n" +
-                "kare\n" +
-                "karetachi\n" +
-                "\n"));
+                        "kare\n" +
+                        "karetachi\n" +
+                        "\n" +
+                        "kare\n" +
+                        "karetachi\n" +
+                        "\n"));
     }
 
     private String getFile(String filename) {

@@ -1,15 +1,14 @@
 package ru.levry.topword.support;
 
-import org.junit.Test;
-import ru.levry.topword.TopWord;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import org.junit.Test;
+import ru.levry.topword.TopWord;
 
 /**
  * @author levry

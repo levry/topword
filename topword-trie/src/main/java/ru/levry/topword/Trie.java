@@ -9,14 +9,9 @@ import java.util.function.BiConsumer;
  * @author levry
  */
 public class Trie<Value> {
+
     private int n;              // size
     private Node<Value> root;   // root of TST
-
-    private static class Node<Value> {
-        private char c;                        // character
-        private Node<Value> left, mid, right;  // left, middle, and right subtries
-        private Value val;                     // value associated with string
-    }
 
     public int size() {
         return n;
@@ -117,6 +112,13 @@ public class Trie<Value> {
         collect(x.mid, prefix.append(x.c), consumer);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, consumer);
+    }
+
+    private static class Node<Value> {
+
+        private char c;                        // character
+        private Node<Value> left, mid, right;  // left, middle, and right subtries
+        private Value val;                     // value associated with string
     }
 
 }

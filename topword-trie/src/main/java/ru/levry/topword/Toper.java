@@ -1,6 +1,11 @@
 package ru.levry.topword;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * @author levry
@@ -30,7 +35,7 @@ public class Toper {
 
     public List<String> most(String prefix, int size) {
 
-        if(trie.size() == 0) {
+        if (trie.size() == 0) {
             return Collections.emptyList();
         }
 
@@ -50,7 +55,7 @@ public class Toper {
     private List<String> convertToWords(PriorityQueue<TopWord> queue, int size) {
         List<String> words = new ArrayList<>(size);
 
-        while(!queue.isEmpty() && words.size() < size) {
+        while (!queue.isEmpty() && words.size() < size) {
             TopWord word = queue.poll();
             words.add(word.word);
         }

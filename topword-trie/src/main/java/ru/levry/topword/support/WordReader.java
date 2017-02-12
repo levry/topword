@@ -1,13 +1,12 @@
 package ru.levry.topword.support;
 
-import ru.levry.topword.TopWord;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
+import ru.levry.topword.TopWord;
 
 /**
  * @author levry
@@ -25,7 +24,7 @@ public class WordReader implements AutoCloseable {
         int n = scanner.nextInt();
 
         List<TopWord> words = new ArrayList<>(n);
-        for (int i = 0; i < n && scanner.hasNext(); i++){
+        for (int i = 0; i < n && scanner.hasNext(); i++) {
             String word = scanner.next();
             int top = scanner.nextInt();
             words.add(new TopWord(word, top));
