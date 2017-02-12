@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':topword-trie')
+
+    compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+
+    providedCompile 'org.apache.tomcat:tomcat-servlet-api:8.5.9'
+
+    testCompile 'junit:junit:4.11'
+}

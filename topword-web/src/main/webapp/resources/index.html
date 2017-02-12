@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="topword">
+<head>
+    <meta charset="UTF-8">
+    <title>Top words</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.css">
+
+    <style>
+        body {
+            padding: 15px;
+        }
+
+        .select-box {
+            background: #fff;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+
+</head>
+
+<body class="ng-cloak" ng-controller="topwords as ctrl">
+
+<div class="select-box">
+    <ui-select ng-model="ctrl.word.selected"
+               theme="bootstrap"
+               reset-search-input="false"
+               style="width: 600px;"
+               title="Choose an word"
+               append-to-body="true">
+        <ui-select-match placeholder="Enter an words...">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="word in ctrl.words track by $index"
+                           refresh="ctrl.refreshWords($select.search)"
+                           refresh-delay="0">
+            <div ng-bind-html="word | highlight: $select.search"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.2/angular-sanitize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.js"></script>
+<script src="/resources/js/topword.js"></script>
+
+</body>
+
+</html>

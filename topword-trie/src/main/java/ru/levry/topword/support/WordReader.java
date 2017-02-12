@@ -25,7 +25,7 @@ public class WordReader implements AutoCloseable {
         int n = scanner.nextInt();
 
         List<TopWord> words = new ArrayList<>(n);
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n && scanner.hasNext(); i++){
             String word = scanner.next();
             int top = scanner.nextInt();
             words.add(new TopWord(word, top));
