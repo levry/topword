@@ -1,17 +1,17 @@
 package ru.levry.topword;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.function.BiConsumer;
 
 /**
  * @author levry
  */
-public class Trie<Value> {
+public class Trie<T> {
 
-    private int n;              // size
-    private Node<Value> root;   // root of TST
+    private int n;
+    private Node<T> root;
 
     public int size() {
         return n;
@@ -23,20 +23,20 @@ public class Trie<Value> {
         return get(key) != null;
     }
 
-    public Value get(String key) {
+    public T get(String key) {
         Objects.requireNonNull(key, "Key must by not null");
 
         if (key.length() == 0) {
             throw new IllegalArgumentException("Key must have length >= 1");
         }
-        Node<Value> x = get(root, key, 0);
+        Node<T> x = get(root, key, 0);
         if (x == null) {
             return null;
         }
-        return x.val;
+        return x.value;
     }
 
-    private Node<Value> get(Node<Value> x, String key, int d) {
+    private Node<T> get(Node<T> x, String key, int d) {
         if (x == null) {
             return null;
         }
@@ -55,7 +55,7 @@ public class Trie<Value> {
         }
     }
 
-    public void put(String key, Value val) {
+    public void put(String key, T val) {
         Objects.requireNonNull(key, "Key must by not null");
 
         if (!contains(key)) {
@@ -64,11 +64,10 @@ public class Trie<Value> {
         root = put(root, key, val, 0);
     }
 
-    private Node<Value> put(Node<Value> x, String key, Value val, int d) {
+    private Node<T> put(Node<T> x, String key, T val, int d) {
         char c = key.charAt(d);
         if (x == null) {
-            x = new Node<>();
-            x.c = c;
+            x = new Node<>(c);
         }
         if (c < x.c) {
             x.left = put(x.left, key, val, d);
@@ -77,48 +76,52 @@ public class Trie<Value> {
         } else if (d < key.length() - 1) {
             x.mid = put(x.mid, key, val, d + 1);
         } else {
-            x.val = val;
+            x.value = val;
         }
         return x;
     }
 
     public Iterable<String> keys() {
-        Queue<String> queue = new LinkedList<>();
+        List<String> queue = new ArrayList<>();
         collect(root, new StringBuilder(), (s, v) -> queue.add(s));
         return queue;
     }
 
-    public void collectWithPrefix(String prefix, BiConsumer<String, Value> consumer) {
+    public void collectWithPrefix(String prefix, BiConsumer<String, T> consumer) {
         Objects.requireNonNull(prefix, "Prefix must be not null");
 
-        Node<Value> x = get(root, prefix, 0);
+        Node<T> x = get(root, prefix, 0);
         if (x == null) {
             return;
         }
-        if (x.val != null) {
-            consumer.accept(prefix, x.val);
+        if (x.value != null) {
+            consumer.accept(prefix, x.value);
         }
         collect(x.mid, new StringBuilder(prefix), consumer);
     }
 
-    private void collect(Node<Value> x, StringBuilder prefix, BiConsumer<String, Value> consumer) {
+    private void collect(Node<T> x, StringBuilder prefix, BiConsumer<String, T> consumer) {
         if (x == null) {
             return;
         }
         collect(x.left, prefix, consumer);
-        if (x.val != null) {
-            consumer.accept(prefix.toString() + x.c, x.val);
+        if (x.value != null) {
+            consumer.accept(prefix.toString() + x.c, x.value);
         }
         collect(x.mid, prefix.append(x.c), consumer);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, consumer);
     }
 
-    private static class Node<Value> {
+    private static class Node<T> {
 
-        private char c;                        // character
-        private Node<Value> left, mid, right;  // left, middle, and right subtries
-        private Value val;                     // value associated with string
+        private final char c;
+        private Node<T> left, mid, right;
+        private T value;
+
+        Node(char c) {
+            this.c = c;
+        }
     }
 
 }
