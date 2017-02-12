@@ -12,7 +12,7 @@ app.controller('topwords',function ($scope, $http) {
         }
         var params = {prefix: prefix, size: 10};
         return $http.get(
-            '/words/most',
+            'words/most',
             {params: params}
         ).then(function(response) {
             vm.words = response.data;
