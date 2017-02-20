@@ -1,6 +1,6 @@
 package ru.levry.topword.cli;
 
-import java.io.File;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,14 +19,8 @@ public class ToperCli {
     private int size = 10;
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            return;
-        }
-
-        String filename = args[0];
-
         ToperCli cli = new ToperCli();
-        cli.readFrom(filename);
+        cli.readFrom(System.in);
         cli.run(System.out);
     }
 
@@ -34,9 +28,8 @@ public class ToperCli {
         this.size = size;
     }
 
-    void readFrom(String filename) throws Exception {
-        File file = new File(filename);
-        try (WordReader reader = new WordReader(file)) {
+    void readFrom(InputStream inputStream) throws Exception {
+        try (WordReader reader = new WordReader(inputStream)) {
             words = reader.read();
             tests = reader.readTest();
         }

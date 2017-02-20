@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import org.junit.Test;
@@ -20,8 +22,8 @@ public class ToperCliTest {
 
         ToperCli cli = new ToperCli();
 
-        String file = getFile("test.txt");
-        cli.readFrom(file);
+        InputStream is = getFile("test.txt");
+        cli.readFrom(is);
 
         assertThat(cli.words, notNullValue());
         assertThat(cli.words, is(Arrays.asList(
@@ -59,9 +61,9 @@ public class ToperCliTest {
                         "\n"));
     }
 
-    private String getFile(String filename) {
+    private InputStream getFile(String filename) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        return classLoader.getResource(filename).getFile();
+        return classLoader.getResource(filename).openStream();
     }
 
 }

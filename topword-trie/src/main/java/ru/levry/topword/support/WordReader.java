@@ -2,10 +2,13 @@ package ru.levry.topword.support;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import ru.levry.topword.TopWord;
 
 /**
@@ -19,28 +22,30 @@ public class WordReader implements AutoCloseable {
         this.scanner = new Scanner(file);
     }
 
+    public WordReader(InputStream inputStream) {
+        this.scanner = new Scanner(inputStream);
+    }
+
     public Collection<TopWord> read() {
-
-        int n = scanner.nextInt();
-
-        List<TopWord> words = new ArrayList<>(n);
-        for (int i = 0; i < n && scanner.hasNext(); i++) {
+        return read(ArrayList::new, () -> {
             String word = scanner.next();
             int top = scanner.nextInt();
-            words.add(new TopWord(word, top));
-        }
-        return words;
+            return new TopWord(word, top);
+        });
     }
 
     public Collection<String> readTest() {
+        return read(ArrayList::new, scanner::next);
+    }
+
+    private <T> List<T> read(Function<Integer, List<T>> supplier, Supplier<T> consumer) {
         int n = scanner.nextInt();
-
-        List<String> tests = new ArrayList<>(n);
-        for (int i = 0; i < n && scanner.hasNext(); n++) {
-            tests.add(scanner.next());
+        List<T> list = supplier.apply(n);
+        for (int i = 0; i < n && scanner.hasNext(); i++) {
+            T item = consumer.get();
+            list.add(item);
         }
-
-        return tests;
+        return list;
     }
 
     @Override

@@ -2,9 +2,8 @@
 
 Состав решения
 /topword-trie
-  базовый проект, содержит реализацию дерева поиска: trie-дерево
+  базовый проект, содержит реализацию поиска слов
   модуль является общим для обоих приложений
-  https://en.wikipedia.org/wiki/Trie
 /topword-cli
   проект, реализация консольного приложения (часть I)
 /topword-web
@@ -12,11 +11,12 @@
 /gradle
   wrapper системы сборки gradle
 
+Алгоритм поиска основан на дереве поиска: trie-дерево (https://en.wikipedia.org/wiki/Trie)
+Приблизительная оценка сложности алгоритма: O(NlgN) - линейно-логарифмический
 
 
-Часть I
 
-Консольное приложение
+Часть I: Консольное приложение
 
 Сборка приложения 
 
@@ -28,19 +28,18 @@
 
 Запуск приложения
 
-java -jar topword-cli/build/libs/topword-cli.jar test.in
-Результат выполнения будут выведены в консольный вывод
+java -jar topword-cli/build/libs/topword-cli.jar
+Исходные данные вводятся через консольный ввод
 
-java -jar topword-cli/build/libs/topword-cli.jar test.in > test.out
-Результат работы приложения будет записан в файл test.out
+java -jar topword-cli/build/libs/topword-cli.jar < test.in
+В качестве исходных данных выступает файл, результат выполнения будет выведен в консольный вывод
 
-time java -jar topword-cli/build/libs/topword-cli.jar test.in > test.out
-Запуск и расчет времени выполнения приложения
+java -jar topword-cli/build/libs/topword-cli.jar < test.in > test.out
+Результат работы приложения будет записан в файл test.out (исходные данные в файле test.in)
 
 
-Часть II
 
-Web приложение
+Часть II: Web приложение
 
 Сборка приложения
 
@@ -54,7 +53,7 @@ Web приложение
 Входной файл с исходными данными указывается через jvm пеменную окружения приложения topword.filename.
 Например -Dtopword.filename=path/to/filename
 
-Запуск web приложения c помощьъ задачи системы сборки
+Запуск web приложения c помощью задачи системы сборки
 ./gradlew -Dtopword.filename=file:///path/to/words.txt tomcatRun
 
 где
